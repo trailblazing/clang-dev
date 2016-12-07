@@ -4108,11 +4108,20 @@ ImplicitParamDecl *ImplicitParamDecl::Create(ASTContext &C, DeclContext *DC,
                                              SourceLocation IdLoc,
                                              IdentifierInfo *Id,
                                              QualType Type) {
+
+    printf("!!! >>>>>static ImplicitParamDecl *Create(ASTContext &C, DeclContext *DC, SourceLocation IdLoc, IdentifierInfo *Id, QualType T)");
+    printf("ASTContext &C = %d", &C);
+    printf("<<<<< !!!\n");
+
   return new (C, DC) ImplicitParamDecl(C, DC, IdLoc, Id, Type);
 }
 
 ImplicitParamDecl *ImplicitParamDecl::CreateDeserialized(ASTContext &C,
                                                          unsigned ID) {
+    printf("!!! >>>>>static ImplicitParamDecl *ImplicitParamDecl::CreateDeserialized(ASTContext &C, unsigned ID))");
+    printf("ASTContext &C = %d", &C);
+    printf("<<<<< !!!\n");
+
   return new (C, ID) ImplicitParamDecl(C, nullptr, SourceLocation(), nullptr,
                                        QualType());
 }

@@ -1,4 +1,4 @@
-//===--- SemaOpenMP.cpp - Semantic Analysis for OpenMP constructs ---------===//
+////===--- SemaOpenMP.cpp - Semantic Analysis for OpenMP constructs ---------===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7030,7 +7030,9 @@ StmtResult Sema::ActOnOpenMPTargetDirective(ArrayRef<OMPClause *> Clauses,
   }
 
   getCurFunction()->setHasBranchProtectedScope();
-
+  printf("!!! >>>>>StmtResult Sema::ActOnOpenMPTargetDirective(ArrayRef<OMPClause *> Clauses, Stmt *AStmt, SourceLocation StartLoc, SourceLocation EndLoc)");
+  printf("Stmt * AStmt = %d", AStmt);
+  printf("<<<<< !!!\n");
   return OMPTargetDirective::Create(Context, StartLoc, EndLoc, Clauses, AStmt);
 }
 
@@ -10699,6 +10701,12 @@ OMPClause *Sema::ActOnOpenMPDeviceClause(Expr *Device, SourceLocation StartLoc,
   if (!IsNonNegativeIntegerValue(ValExpr, *this, OMPC_device,
                                  /*StrictlyPositive=*/false))
     return nullptr;
+//        char str[2048];
+                                                                                                             
+        printf("!!! >>>>>OMPClause *Sema::ActOnOpenMPDeviceClause(Expr *Device, SourceLocation StartLoc, SourceLocation LParenLoc, SourceLocation EndLoc)");
+        printf("%d", static_cast<void*>(ValExpr));
+        printf("<<<<< !!!\n");                                                                               
+//        scanf("%s", str);
 
   return new (Context) OMPDeviceClause(ValExpr, StartLoc, LParenLoc, EndLoc);
 }

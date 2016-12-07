@@ -2036,6 +2036,13 @@ void OMPClauseWriter::VisitOMPDependClause(OMPDependClause *C) {
 }
 
 void OMPClauseWriter::VisitOMPDeviceClause(OMPDeviceClause *C) {
+//        char str[2048];
+
+        printf("!!! >>>>>void OMPClauseWriter::VisitOMPDeviceClause(OMPDeviceClause *C)");
+        printf("%d", C);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);
+
   Record.AddStmt(C->getDevice());
   Record.AddSourceLocation(C->getLParenLoc());
 }

@@ -2935,6 +2935,13 @@ bool RecursiveASTVisitor<Derived>::VisitOMPDependClause(OMPDependClause *C) {
 
 template <typename Derived>
 bool RecursiveASTVisitor<Derived>::VisitOMPDeviceClause(OMPDeviceClause *C) {
+//       char str[2048];
+                                                                   
+       printf("!!! >>>>>template<typename Derived>bool RecursiveASTVisitor<Derived>::VisitOMPDeviceClause(OMPDeviceClause *C) ");          
+       printf("%d", C);                                            
+       printf("<<<<< !!!\n");                                      
+//       scanf("%s", str);
+
   TRY_TO(TraverseStmt(C->getDevice()));
   return true;
 }

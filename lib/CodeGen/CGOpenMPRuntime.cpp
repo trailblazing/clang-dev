@@ -6087,7 +6087,14 @@ void CGOpenMPRuntime::scanForTargetRegionsFunctions(const Stmt *S,
   // If we find a OMP target directive, codegen the outline function and
   // register the result.
   // FIXME: Add other directives with target when they become supported.
+
+
+
   bool isTargetDirective = isa<OMPTargetDirective>(S);
+
+  printf("!!! >>>>>void CGOpenMPRuntime::scanForTargetRegionsFunctions(const Stmt *S, StringRef ParentName) If we find a OMP target directive, codegen the outline function and register the result. FIXME: Add other directives with target when they become supported.");
+  printf("isTargetDirective = %d", isTargetDirective);
+  printf("<<<<< !!!\n");
 
   if (isTargetDirective) {
     auto *E = cast<OMPExecutableDirective>(S);

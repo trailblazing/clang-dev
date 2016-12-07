@@ -2149,6 +2149,13 @@ void OMPClauseEnqueue::VisitOMPSIMDClause(const OMPSIMDClause *) {}
 void OMPClauseEnqueue::VisitOMPNogroupClause(const OMPNogroupClause *) {}
 
 void OMPClauseEnqueue::VisitOMPDeviceClause(const OMPDeviceClause *C) {
+//        char str[2048];
+
+        printf("!!! >>>>>void OMPClauseEnqueue::VisitOMPDeviceClause(const OMPDeviceClause *C)");
+        printf("%d", C);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);
+
   Visitor->AddStmt(C->getDevice());
 }
 

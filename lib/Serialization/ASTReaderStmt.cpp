@@ -2277,6 +2277,13 @@ void OMPClauseReader::VisitOMPDependClause(OMPDependClause *C) {
 }
 
 void OMPClauseReader::VisitOMPDeviceClause(OMPDeviceClause *C) {
+//        char str[2048];
+                                                                                                  
+        printf("!!! >>>>>void OMPClauseReader::VisitOMPDeviceClause(OMPDeviceClause *C)");        
+        printf("%d", C);
+        printf("<<<<< !!!\n");                                                                    
+//        scanf("%s", str);
+
   C->setDevice(Reader->Reader.ReadSubExpr());
   C->setLParenLoc(Reader->ReadSourceLocation(Record, Idx));
 }

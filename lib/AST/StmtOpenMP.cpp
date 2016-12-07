@@ -678,6 +678,9 @@ OMPTargetDirective *OMPTargetDirective::Create(const ASTContext &C,
                                                SourceLocation EndLoc,
                                                ArrayRef<OMPClause *> Clauses,
                                                Stmt *AssociatedStmt) {
+    printf("!!! >>>>>OMPTargetDirective *OMPTargetDirective::Create(const ASTContext &C, SourceLocation StartLoc, SourceLocation EndLoc, ArrayRef<OMPClause *> Clauses, Stmt *AssociatedStmt)");
+    printf("%d", &C);
+    printf("<<<<< !!!\n");
   unsigned Size =
       llvm::alignTo(sizeof(OMPTargetDirective), alignof(OMPClause *));
   void *Mem =
@@ -692,6 +695,9 @@ OMPTargetDirective *OMPTargetDirective::Create(const ASTContext &C,
 OMPTargetDirective *OMPTargetDirective::CreateEmpty(const ASTContext &C,
                                                     unsigned NumClauses,
                                                     EmptyShell) {
+    printf("!!! >>>>>OMPTargetDirective *OMPTargetDirective::CreateEmpty(const ASTContext &C, unsigned NumClauses, EmptyShell)");
+    printf("%d", &C);
+    printf("<<<<< !!!\n");
   unsigned Size =
       llvm::alignTo(sizeof(OMPTargetDirective), alignof(OMPClause *));
   void *Mem =

@@ -724,6 +724,13 @@ void OMPClausePrinter::VisitOMPThreadsClause(OMPThreadsClause *) {
 void OMPClausePrinter::VisitOMPSIMDClause(OMPSIMDClause *) { OS << "simd"; }
 
 void OMPClausePrinter::VisitOMPDeviceClause(OMPDeviceClause *Node) {
+//        char str[2048];
+
+        printf("!!! >>>>>void OMPClausePrinter::VisitOMPDeviceClause(OMPDeviceClause *Node)");
+        printf("%d", Node);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);
+
   OS << "device(";
   Node->getDevice()->printPretty(OS, nullptr, Policy, 0);
   OS << ")";
@@ -1101,6 +1108,9 @@ void StmtPrinter::VisitOMPAtomicDirective(OMPAtomicDirective *Node) {
 }
 
 void StmtPrinter::VisitOMPTargetDirective(OMPTargetDirective *Node) {
+    printf("%%%% !!! >>>>>void StmtPrinter::VisitOMPTargetDirective(OMPTargetDirective *Node) ");
+    printf("OMPTargetDirective*Node = %d", Node);
+    printf("<<<<< !!!%%%%\n");
   Indent() << "#pragma omp target ";
   PrintOMPExecutableDirective(Node);
 }

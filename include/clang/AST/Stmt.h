@@ -26,7 +26,7 @@
 #include "llvm/Support/Compiler.h"
 #include "llvm/Support/ErrorHandling.h"
 #include <string>
-
+#include <iostream>
 namespace llvm {
   class FoldingSetNodeID;
 }
@@ -340,6 +340,7 @@ protected:
 
 public:
   Stmt(StmtClass SC) {
+//	std::cout<< "!!!>>>>>>>Stmt(StmtClass SC): "<<SC << std::endl;
     static_assert(sizeof(*this) % alignof(void *) == 0,
                   "Insufficient alignment!");
     StmtBits.sClass = SC;

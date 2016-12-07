@@ -2684,7 +2684,15 @@ class OMPDeviceClause : public OMPClause {
   ///
   /// \param E Device number.
   ///
-  void setDevice(Expr *E) { Device = E; }
+  void setDevice(Expr *E) {
+//       char str[2048];
+
+       printf("!!! >>>>>Expr *E >in setDevice of ODC");
+       printf("%d", E);
+       printf("<<<<< !!!\n");
+//       scanf("%s", str);  
+
+ Device = E; }
 
 public:
   /// \brief Build 'device' clause.
@@ -2697,21 +2705,58 @@ public:
   OMPDeviceClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc, 
                   SourceLocation EndLoc)
       : OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc), 
-        Device(E) {}
+        Device(E) 
+
+{
+//       char str[2048];
+
+       printf("!!! >>>>>OMPDeviceClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc,  SourceLocation EndLoc)  : OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc),  Device(E) ");
+       printf("Expr *E=\t%d", E);
+       printf("<<<<< !!!\n");
+//       scanf("%s", str);  
+
+}
 
   /// \brief Build an empty clause.
   ///
   OMPDeviceClause()
       : OMPClause(OMPC_device, SourceLocation(), SourceLocation()), 
-        LParenLoc(SourceLocation()), Device(nullptr) {}
+        LParenLoc(SourceLocation()), Device(nullptr) 
+{
+//       char str[2048];
+
+       printf("!!! >>>>>OMPDeviceClause() : OMPClause(OMPC_device, SourceLocation(), SourceLocation()), LParenLoc(SourceLocation()), Device(nullptr)\t");
+       printf("this=\t%d", this);
+       printf("<<<<< !!!\n");
+//       scanf("%s", str);  
+
+}
+
+
   /// \brief Sets the location of '('.
   void setLParenLoc(SourceLocation Loc) { LParenLoc = Loc; }
   /// \brief Returns the location of '('.
   SourceLocation getLParenLoc() const { return LParenLoc; }
   /// \brief Return device number.
-  Expr *getDevice() { return cast<Expr>(Device); }
+  Expr *getDevice() { 
+//       char str[2048];
+
+       printf("!!! >>>>>Stmt *Device >in getDevice of ODC");
+       printf("%d", Device);
+       printf("<<<<< !!!\n");
+//       scanf("%s", str);  
+
+return cast<Expr>(Device); }
   /// \brief Return device number.
-  Expr *getDevice() const { return cast<Expr>(Device); }
+  Expr *getDevice() const { 
+//       char str[2048];
+
+       printf("!!! >>>>>Expr *E >in getDevice const of ODC");
+       printf("%d", Device);
+       printf("<<<<< !!!\n");
+//       scanf("%s", str);  
+
+return cast<Expr>(Device); }
 
   static bool classof(const OMPClause *T) {
     return T->getClauseKind() == OMPC_device;

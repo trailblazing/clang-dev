@@ -58,6 +58,9 @@ CXString createNull() {
 CXString createRef(const char *String) {
   if (String && String[0] == '\0')
     return createEmpty();
+  printf("!!! >>>>>OCXString createRef(const char *String)");
+  printf("\t%s", String);
+  printf("<<<<< !!!\n");
 
   CXString Str;
   Str.data = String;

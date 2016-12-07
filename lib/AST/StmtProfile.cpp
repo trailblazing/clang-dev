@@ -488,6 +488,13 @@ void OMPClauseProfiler::VisitOMPDependClause(const OMPDependClause *C) {
   VisitOMPClauseList(C);
 }
 void OMPClauseProfiler::VisitOMPDeviceClause(const OMPDeviceClause *C) {
+//        char str[2048];
+
+        printf("!!! >>>>>void OMPClauseProfiler::VisitOMPDeviceClause(const OMPDeviceClause *C)");
+        printf("%d", C);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);
+
   if (C->getDevice())
     Profiler->VisitStmt(C->getDevice());
 }
@@ -635,6 +642,9 @@ void StmtProfiler::VisitOMPAtomicDirective(const OMPAtomicDirective *S) {
 }
 
 void StmtProfiler::VisitOMPTargetDirective(const OMPTargetDirective *S) {
+    printf("!!! >>>>>void StmtProfiler::VisitOMPTargetDirective(const OMPTargetDirective *S)");
+    printf("OMPTargetDirective*S = %d", S);
+    printf("<<<<< !!!\n");
   VisitOMPExecutableDirective(S);
 }
 

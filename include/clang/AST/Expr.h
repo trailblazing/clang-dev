@@ -110,6 +110,13 @@ protected:
        bool TD, bool VD, bool ID, bool ContainsUnexpandedParameterPack)
     : Stmt(SC)
   {
+      //char str[2048];
+
+//      printf("!!! >>>>>  Expr(StmtClass SC, QualType T, ExprValueKind VK, ExprObjectKind OK, bool TD, bool VD, bool ID, bool ContainsUnexpandedParameterPack)");
+//      printf("%d", static_cast<void*>(&SC));
+//      printf("<<<<< !!!\n");
+      //scanf("%s", str);
+
     ExprBits.TypeDependent = TD;
     ExprBits.ValueDependent = VD;
     ExprBits.InstantiationDependent = ID;

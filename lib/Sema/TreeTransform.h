@@ -8086,6 +8086,15 @@ TreeTransform<Derived>::TransformOMPDependClause(OMPDependClause *C) {
 template <typename Derived>
 OMPClause *
 TreeTransform<Derived>::TransformOMPDeviceClause(OMPDeviceClause *C) {
+//        char str[2048];
+
+        printf("!!! >>>>>template <typename Derived>\
+OMPClause *\
+TreeTransform<Derived>::TransformOMPDeviceClause(OMPDeviceClause *C)");
+        printf("%d", C);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);  
+
   ExprResult E = getDerived().TransformExpr(C->getDevice());
   if (E.isInvalid())
     return nullptr;

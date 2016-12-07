@@ -3318,6 +3318,10 @@ std::pair<llvm::Function * /*OutlinedFn*/, llvm::Constant * /*OutlinedFnID*/>
 CodeGenFunction::EmitOMPTargetDirectiveOutlinedFunction(
     CodeGenModule &CGM, const OMPTargetDirective &S, StringRef ParentName,
     bool IsOffloadEntry) {
+    printf("!!! >>>>>std::pair<llvm::Function * OutlinedFn, llvm::Constant * OutlinedFnID> CodeGenFunction::EmitOMPTargetDirectiveOutlinedFunction( CodeGenModule &CGM, const OMPTargetDirective &S, StringRef ParentName, bool IsOffloadEntry) ");
+    printf("%d", &S);
+    printf("<<<<< !!!\n");
+
   llvm::Function *OutlinedFn = nullptr;
   llvm::Constant *OutlinedFnID = nullptr;
   auto &&CodeGen = [&S](CodeGenFunction &CGF, PrePostActionTy &Action) {
@@ -3354,6 +3358,13 @@ void CodeGenFunction::EmitOMPTargetDirective(const OMPTargetDirective &S) {
   // Check if we have any device clause associated with the directive.
   const Expr *Device = nullptr;
   if (auto *C = S.getSingleClause<OMPDeviceClause>()) {
+//        char str[2048];
+                                                                                                  
+        printf("!!! >>>>>void CodeGenFunction::EmitOMPTargetDirective(const OMPTargetDirective &S)");        
+        printf("%d", C);
+        printf("<<<<< !!!\n");                                                                    
+//        scanf("%s", str);
+
     Device = C->getDevice();
   }
 
@@ -3599,9 +3610,17 @@ void CodeGenFunction::EmitOMPTargetDataDirective(
 
   // Check if we have any device clause associated with the directive.
   const Expr *Device = nullptr;
-  if (auto *C = S.getSingleClause<OMPDeviceClause>())
-    Device = C->getDevice();
+  if (auto *C = S.getSingleClause<OMPDeviceClause>()){
+//        char str[2048];
+                                                                                                  
+        printf("!!! >>>>>void CodeGenFunction::EmitOMPTargetDataDirective(\
+    const OMPTargetDataDirective &S)");        
+        printf("%d", C);
+        printf("<<<<< !!!\n");                                                                    
+//        scanf("%s", str);
 
+    Device = C->getDevice();
+}
   // Set the action to signal privatization of device pointers.
   RCG.setAction(PrivAction);
 
@@ -3624,8 +3643,15 @@ void CodeGenFunction::EmitOMPTargetEnterDataDirective(
 
   // Check if we have any device clause associated with the directive.
   const Expr *Device = nullptr;
-  if (auto *C = S.getSingleClause<OMPDeviceClause>())
-    Device = C->getDevice();
+  if (auto *C = S.getSingleClause<OMPDeviceClause>()){
+//        char str[2048];
+                                                                                              
+        printf("!!! >>>>>void CodeGenFunction::EmitOMPTargetEnterDataDirective(const OMPTargetEnterDataDirective &S)");                                                       
+        printf("%d", C);                                                                      
+        printf("<<<<< !!!\n");                                                                
+//        scanf("%s", str);
+
+    Device = C->getDevice();}
 
   CGM.getOpenMPRuntime().emitTargetDataStandAloneCall(*this, S, IfCond, Device);
 }
@@ -3644,8 +3670,16 @@ void CodeGenFunction::EmitOMPTargetExitDataDirective(
 
   // Check if we have any device clause associated with the directive.
   const Expr *Device = nullptr;
-  if (auto *C = S.getSingleClause<OMPDeviceClause>())
-    Device = C->getDevice();
+  if (auto *C = S.getSingleClause<OMPDeviceClause>()){
+//        char str[2048];
+                                                                                                                                        
+        printf("!!! >>>>>void CodeGenFunction::EmitOMPTargetExitDataDirective(\
+    const OMPTargetExitDataDirective &S)");                 
+        printf("%d", C);                                                                                                                
+        printf("<<<<< !!!\n");                                                                                                          
+//        scanf("%s", str);
+
+    Device = C->getDevice();}
 
   CGM.getOpenMPRuntime().emitTargetDataStandAloneCall(*this, S, IfCond, Device);
 }
@@ -3821,8 +3855,16 @@ void CodeGenFunction::EmitOMPTargetUpdateDirective(
 
   // Check if we have any device clause associated with the directive.
   const Expr *Device = nullptr;
-  if (auto *C = S.getSingleClause<OMPDeviceClause>())
-    Device = C->getDevice();
+  if (auto *C = S.getSingleClause<OMPDeviceClause>()){
+//        char str[2048];
+
+        printf("!!! >>>>>void CodeGenFunction::EmitOMPTargetUpdateDirective(\
+    const OMPTargetUpdateDirective &S)");
+        printf("%d", C);
+        printf("<<<<< !!!\n");
+//        scanf("%s", str);
+
+    Device = C->getDevice();}
 
   CGM.getOpenMPRuntime().emitTargetDataStandAloneCall(*this, S, IfCond, Device);
 }
