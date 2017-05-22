@@ -61,7 +61,8 @@ CXString createRef(const char *String) {
   printf("!!! >>>>>OCXString createRef(const char *String)");
   printf("\t%s", String);
   printf("<<<<< !!!\n");
-
+//  char str[2048];
+//  scanf("%s", str);
   CXString Str;
   Str.data = String;
   Str.private_flags = CXS_Unmanaged;

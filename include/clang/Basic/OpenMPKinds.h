@@ -17,22 +17,46 @@
 
 #include "llvm/ADT/StringRef.h"
 
+//namespace clang {
+
+namespace omph {
+class OMPDeviceClause;
+enum OpenMPDeviceKind {
+  HOSTCPU,
+  NVGPU,
+  ITLGPU,
+  ITLMIC,
+  TIDSP,
+  AMDAPU,
+  REMOTE,
+  THSIM
+};
+
+/// \brief OpenMP attributes for 'device' clause.
+enum OpenMPDeviceClauseKind {
+#define OPENMP_DEVICE_KIND(Name) OMPC_DEVICE_##Name,
+#include "clang/Basic/OpenMPKinds.def"
+  OMPC_DEVICE_unknown
+};
+
+}
+//}
+using OMPDeviceClause = omph::OMPDeviceClause;
+//typedef omph::OMPDeviceClause OMPDeviceClause;
+
 namespace clang {
 
 /// \brief OpenMP directives.
 enum OpenMPDirectiveKind {
-#define OPENMP_DIRECTIVE(Name) \
-  OMPD_##Name,
-#define OPENMP_DIRECTIVE_EXT(Name, Str) \
-  OMPD_##Name,
+#define OPENMP_DIRECTIVE(Name) OMPD_##Name,
+#define OPENMP_DIRECTIVE_EXT(Name, Str) OMPD_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPD_unknown
 };
 
 /// \brief OpenMP clauses.
 enum OpenMPClauseKind {
-#define OPENMP_CLAUSE(Name, Class) \
-  OMPC_##Name,
+#define OPENMP_CLAUSE(Name, Class) OMPC_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_threadprivate,
   OMPC_uniform,
@@ -41,24 +65,22 @@ enum OpenMPClauseKind {
 
 /// \brief OpenMP attributes for 'default' clause.
 enum OpenMPDefaultClauseKind {
-#define OPENMP_DEFAULT_KIND(Name) \
-  OMPC_DEFAULT_##Name,
+#define OPENMP_DEFAULT_KIND(Name) OMPC_DEFAULT_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_DEFAULT_unknown
 };
 
+
 /// \brief OpenMP attributes for 'proc_bind' clause.
 enum OpenMPProcBindClauseKind {
-#define OPENMP_PROC_BIND_KIND(Name) \
-  OMPC_PROC_BIND_##Name,
+#define OPENMP_PROC_BIND_KIND(Name) OMPC_PROC_BIND_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_PROC_BIND_unknown
 };
 
 /// \brief OpenMP attributes for 'schedule' clause.
 enum OpenMPScheduleClauseKind {
-#define OPENMP_SCHEDULE_KIND(Name) \
-  OMPC_SCHEDULE_##Name,
+#define OPENMP_SCHEDULE_KIND(Name) OMPC_SCHEDULE_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_SCHEDULE_unknown
 };
@@ -66,32 +88,28 @@ enum OpenMPScheduleClauseKind {
 /// \brief OpenMP modifiers for 'schedule' clause.
 enum OpenMPScheduleClauseModifier {
   OMPC_SCHEDULE_MODIFIER_unknown = OMPC_SCHEDULE_unknown,
-#define OPENMP_SCHEDULE_MODIFIER(Name) \
-  OMPC_SCHEDULE_MODIFIER_##Name,
+#define OPENMP_SCHEDULE_MODIFIER(Name) OMPC_SCHEDULE_MODIFIER_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_SCHEDULE_MODIFIER_last
 };
 
 /// \brief OpenMP attributes for 'depend' clause.
 enum OpenMPDependClauseKind {
-#define OPENMP_DEPEND_KIND(Name) \
-  OMPC_DEPEND_##Name,
+#define OPENMP_DEPEND_KIND(Name) OMPC_DEPEND_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_DEPEND_unknown
 };
 
 /// \brief OpenMP attributes for 'linear' clause.
 enum OpenMPLinearClauseKind {
-#define OPENMP_LINEAR_KIND(Name) \
-  OMPC_LINEAR_##Name,
+#define OPENMP_LINEAR_KIND(Name) OMPC_LINEAR_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_LINEAR_unknown
 };
 
 /// \brief OpenMP mapping kind for 'map' clause.
 enum OpenMPMapClauseKind {
-#define OPENMP_MAP_KIND(Name) \
-  OMPC_MAP_##Name,
+#define OPENMP_MAP_KIND(Name) OMPC_MAP_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_MAP_unknown
 };
@@ -105,8 +123,7 @@ enum OpenMPDistScheduleClauseKind {
 
 /// \brief OpenMP attributes for 'defaultmap' clause.
 enum OpenMPDefaultmapClauseKind {
-#define OPENMP_DEFAULTMAP_KIND(Name) \
-  OMPC_DEFAULTMAP_##Name,
+#define OPENMP_DEFAULTMAP_KIND(Name) OMPC_DEFAULTMAP_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_DEFAULTMAP_unknown
 };
@@ -114,8 +131,7 @@ enum OpenMPDefaultmapClauseKind {
 /// \brief OpenMP modifiers for 'defaultmap' clause.
 enum OpenMPDefaultmapClauseModifier {
   OMPC_DEFAULTMAP_MODIFIER_unknown = OMPC_DEFAULTMAP_unknown,
-#define OPENMP_DEFAULTMAP_MODIFIER(Name) \
-  OMPC_DEFAULTMAP_MODIFIER_##Name,
+#define OPENMP_DEFAULTMAP_MODIFIER(Name) OMPC_DEFAULTMAP_MODIFIER_##Name,
 #include "clang/Basic/OpenMPKinds.def"
   OMPC_DEFAULTMAP_MODIFIER_last
 };
@@ -229,4 +245,3 @@ bool isOpenMPLoopBoundSharingDirective(OpenMPDirectiveKind Kind);
 }
 
 #endif
-

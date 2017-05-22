@@ -70,7 +70,17 @@ protected:
       : Stmt(SC), Kind(K), StartLoc(std::move(StartLoc)),
         EndLoc(std::move(EndLoc)), NumClauses(NumClauses),
         NumChildren(NumChildren),
-        ClausesOffset(llvm::alignTo(sizeof(T), alignof(OMPClause *))) {}
+        ClausesOffset(llvm::alignTo(sizeof(T), alignof(OMPClause *))) {
+
+
+          printf("!!! >>>>>  template <typename T>\
+                 OMPExecutableDirective(const T *, StmtClass SC, OpenMPDirectiveKind K,\
+                                        SourceLocation StartLoc, SourceLocation EndLoc,\
+                                        unsigned NumClauses, unsigned NumChildren)");
+//          printf("const T * = %d", &T);
+//          printf(" OpenMPDirectiveKind K = %d", K);
+          printf("<<<<< !!!\n");
+  }
 
   /// \brief Sets the list of variables for this clause.
   ///

@@ -76,6 +76,7 @@ class OMPClauseWithPreInit {
   friend class OMPClauseReader;
   /// Pre-initialization statement for the clause.
   Stmt *PreInit;
+
 protected:
   /// Set pre-initialization statement for the clause.
   void setPreInitStmt(Stmt *S) { PreInit = S; }
@@ -98,6 +99,7 @@ class OMPClauseWithPostUpdate : public OMPClauseWithPreInit {
   friend class OMPClauseReader;
   /// Post-update expression for the clause.
   Expr *PostUpdate;
+
 protected:
   /// Set pre-initialization statement for the clause.
   void setPostUpdateExpr(Expr *S) { PostUpdate = S; }
@@ -702,7 +704,7 @@ class OMPScheduleClause : public OMPClause, public OMPClauseWithPreInit {
   /// \brief A kind of the 'schedule' clause.
   OpenMPScheduleClauseKind Kind;
   /// \brief Modifiers for 'schedule' clause.
-  enum {FIRST, SECOND, NUM_MODIFIERS};
+  enum { FIRST, SECOND, NUM_MODIFIERS };
   OpenMPScheduleClauseModifier Modifiers[NUM_MODIFIERS];
   /// \brief Locations of modifiers.
   SourceLocation ModifiersLoc[NUM_MODIFIERS];
@@ -893,8 +895,8 @@ public:
   /// \param LParenLoc Location of '('.
   /// \param EndLoc Ending location of the clause.
   ///
-  OMPOrderedClause(Expr *Num, SourceLocation StartLoc,
-                    SourceLocation LParenLoc, SourceLocation EndLoc)
+  OMPOrderedClause(Expr *Num, SourceLocation StartLoc, SourceLocation LParenLoc,
+                   SourceLocation EndLoc)
       : OMPClause(OMPC_ordered, StartLoc, EndLoc), LParenLoc(LParenLoc),
         NumForLoops(Num) {}
 
@@ -2665,6 +2667,7 @@ public:
   }
 };
 
+#ifdef USE_OMPH
 /// \brief This represents 'device' clause in the '#pragma omp ...'
 /// directive.
 ///
@@ -2685,14 +2688,15 @@ class OMPDeviceClause : public OMPClause {
   /// \param E Device number.
   ///
   void setDevice(Expr *E) {
-//       char str[2048];
 
-       printf("!!! >>>>>Expr *E >in setDevice of ODC");
-       printf("%d", E);
-       printf("<<<<< !!!\n");
-//       scanf("%s", str);  
+    printf("!!! >>>>>Expr *E >in setDevice of ODC");
+//    printf("%d", E);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
 
- Device = E; }
+    Device = E;
+  }
 
 public:
   /// \brief Build 'device' clause.
@@ -2702,61 +2706,64 @@ public:
   /// \param LParenLoc Location of '('.
   /// \param EndLoc Ending location of the clause.
   ///
-  OMPDeviceClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc, 
+  OMPDeviceClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc,
                   SourceLocation EndLoc)
-      : OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc), 
-        Device(E) 
+      : OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc),
+        Device(E)
 
-{
-//       char str[2048];
+  {
 
-       printf("!!! >>>>>OMPDeviceClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc,  SourceLocation EndLoc)  : OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc),  Device(E) ");
-       printf("Expr *E=\t%d", E);
-       printf("<<<<< !!!\n");
-//       scanf("%s", str);  
-
-}
+    printf("!!! >>>>>OMPDeviceClause(Expr *E, SourceLocation StartLoc, "
+           "SourceLocation LParenLoc,  SourceLocation EndLoc)  : "
+           "OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc),  "
+           "Device(E) ");
+//    printf("Expr *E=\t%d", E);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+  }
 
   /// \brief Build an empty clause.
   ///
   OMPDeviceClause()
-      : OMPClause(OMPC_device, SourceLocation(), SourceLocation()), 
-        LParenLoc(SourceLocation()), Device(nullptr) 
-{
-//       char str[2048];
+      : OMPClause(OMPC_device, SourceLocation(), SourceLocation()),
+        LParenLoc(SourceLocation()), Device(nullptr) {
 
-       printf("!!! >>>>>OMPDeviceClause() : OMPClause(OMPC_device, SourceLocation(), SourceLocation()), LParenLoc(SourceLocation()), Device(nullptr)\t");
-       printf("this=\t%d", this);
-       printf("<<<<< !!!\n");
-//       scanf("%s", str);  
-
-}
-
+    printf("!!! >>>>>OMPDeviceClause() : OMPClause(OMPC_device, "
+           "SourceLocation(), SourceLocation()), LParenLoc(SourceLocation()), "
+           "Device(nullptr)\t");
+//    printf("this=\t%d", this);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+  }
 
   /// \brief Sets the location of '('.
   void setLParenLoc(SourceLocation Loc) { LParenLoc = Loc; }
   /// \brief Returns the location of '('.
   SourceLocation getLParenLoc() const { return LParenLoc; }
   /// \brief Return device number.
-  Expr *getDevice() { 
-//       char str[2048];
+  Expr *getDevice() {
 
-       printf("!!! >>>>>Stmt *Device >in getDevice of ODC");
-       printf("%d", Device);
-       printf("<<<<< !!!\n");
-//       scanf("%s", str);  
+    printf("!!! >>>>>Stmt *Device >in getDevice of ODC");
+//    printf("%d", Device);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
 
-return cast<Expr>(Device); }
+    return cast<Expr>(Device);
+  }
   /// \brief Return device number.
-  Expr *getDevice() const { 
-//       char str[2048];
+  Expr *getDevice() const {
 
-       printf("!!! >>>>>Expr *E >in getDevice const of ODC");
-       printf("%d", Device);
-       printf("<<<<< !!!\n");
-//       scanf("%s", str);  
+    printf("!!! >>>>>Expr *E >in getDevice const of ODC");
+//    printf("%d", Device);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
 
-return cast<Expr>(Device); }
+    return cast<Expr>(Device);
+  }
 
   static bool classof(const OMPClause *T) {
     return T->getClauseKind() == OMPC_device;
@@ -2764,6 +2771,8 @@ return cast<Expr>(Device); }
 
   child_range children() { return child_range(&Device, &Device + 1); }
 };
+
+#endif // USE_OMPH
 
 /// \brief This represents 'threads' clause in the '#pragma omp ...' directive.
 ///
@@ -3486,9 +3495,8 @@ public:
   }
 
   child_range children() {
-    return child_range(
-        reinterpret_cast<Stmt **>(varlist_begin()),
-        reinterpret_cast<Stmt **>(varlist_end()));
+    return child_range(reinterpret_cast<Stmt **>(varlist_begin()),
+                       reinterpret_cast<Stmt **>(varlist_end()));
   }
 };
 
@@ -3523,13 +3531,13 @@ public:
   ///
   OMPNumTeamsClause(Expr *E, SourceLocation StartLoc, SourceLocation LParenLoc,
                     SourceLocation EndLoc)
-      : OMPClause(OMPC_num_teams, StartLoc, EndLoc), LParenLoc(LParenLoc), 
+      : OMPClause(OMPC_num_teams, StartLoc, EndLoc), LParenLoc(LParenLoc),
         NumTeams(E) {}
 
   /// \brief Build an empty clause.
   ///
   OMPNumTeamsClause()
-      : OMPClause(OMPC_num_teams, SourceLocation(), SourceLocation()), 
+      : OMPClause(OMPC_num_teams, SourceLocation(), SourceLocation()),
         LParenLoc(SourceLocation()), NumTeams(nullptr) {}
   /// \brief Sets the location of '('.
   void setLParenLoc(SourceLocation Loc) { LParenLoc = Loc; }
@@ -3953,12 +3961,14 @@ public:
   }
 };
 
-/// \brief This represents 'defaultmap' clause in the '#pragma omp ...' directive.
+/// \brief This represents 'defaultmap' clause in the '#pragma omp ...'
+/// directive.
 ///
 /// \code
 /// #pragma omp target defaultmap(tofrom: scalar)
 /// \endcode
-/// In this example directive '#pragma omp target' has 'defaultmap' clause of kind
+/// In this example directive '#pragma omp target' has 'defaultmap' clause of
+/// kind
 /// 'scalar' with modifier 'tofrom'.
 ///
 class OMPDefaultmapClause : public OMPClause {
@@ -3983,14 +3993,10 @@ class OMPDefaultmapClause : public OMPClause {
   ///
   /// \param M Defaultmap modifier.
   ///
-  void setDefaultmapModifier(OpenMPDefaultmapClauseModifier M) {
-    Modifier = M;
-  }
+  void setDefaultmapModifier(OpenMPDefaultmapClauseModifier M) { Modifier = M; }
   /// \brief Set location of the defaultmap modifier.
   ///
-  void setDefaultmapModifierLoc(SourceLocation Loc) {
-    ModifierLoc = Loc;
-  }
+  void setDefaultmapModifierLoc(SourceLocation Loc) { ModifierLoc = Loc; }
   /// \brief Sets the location of '('.
   ///
   /// \param Loc Location of '('.
@@ -4043,9 +4049,7 @@ public:
   SourceLocation getDefaultmapKindLoc() { return KindLoc; }
   /// \brief Get the modifier location.
   ///
-  SourceLocation getDefaultmapModifierLoc() const {
-    return ModifierLoc;
-  }
+  SourceLocation getDefaultmapModifierLoc() const { return ModifierLoc; }
 
   static bool classof(const OMPClause *T) {
     return T->getClauseKind() == OMPC_defaultmap;
@@ -4540,5 +4544,130 @@ public:
   }
 };
 } // end namespace clang
+
+namespace clang {
+class OMPClauseReader;
+}
+// namespace clang {
+namespace omph {
+// cleni, 03-02-2017
+//// HOPMDeviceClause extend OMPDeviceClause for #pragma omp target device(0:*)
+// class OMPDeviceClause : public clang::OMPDeviceClause {
+// public:
+//  OMPDeviceClause() : clang::OMPDeviceClause() {}
+
+//  OMPDeviceClause(clang::Expr *E, clang::SourceLocation StartLoc,
+//                  clang::SourceLocation LParenLoc, clang::SourceLocation
+//                  EndLoc)
+//      : clang::OMPDeviceClause(E, StartLoc, LParenLoc, EndLoc) {}
+//};
+
+/// \brief This represents 'device' clause in the '#pragma omp ...'
+/// directive.
+///
+/// \code
+/// #pragma omp target device(a)
+/// \endcode
+/// In this example directive '#pragma omp target' has clause 'device'
+/// with single expression 'a'.
+///
+class OMPDeviceClause : public clang::OMPClause {
+  friend class clang::OMPClauseReader;
+  /// \brief Location of '('.
+  clang::SourceLocation LParenLoc;
+  /// \brief Device number.
+  clang::Stmt *Device;
+  /// \brief Set the device number.
+  ///
+  /// \param E Device number.
+  ///
+  void setDevice(clang::Expr *E) {
+
+    printf("!!! >>>>>Expr *E >in setDevice of ODC");
+//    printf("%d", E);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+
+    Device = E;
+  }
+
+public:
+  /// \brief Build 'device' clause.
+  ///
+  /// \param E Expression associated with this clause.
+  /// \param StartLoc Starting location of the clause.
+  /// \param LParenLoc Location of '('.
+  /// \param EndLoc Ending location of the clause.
+  ///
+  OMPDeviceClause(clang::Expr *E, clang::SourceLocation StartLoc,
+		  clang::SourceLocation LParenLoc, clang::SourceLocation EndLoc)
+      : clang::OMPClause(clang::OMPC_device, StartLoc, EndLoc),
+	LParenLoc(LParenLoc), Device(E)
+
+  {
+
+    printf("!!! >>>>>OMPDeviceClause(Expr *E, SourceLocation StartLoc, "
+	   "SourceLocation LParenLoc,  SourceLocation EndLoc)  : "
+	   "OMPClause(OMPC_device, StartLoc, EndLoc), LParenLoc(LParenLoc),  "
+	   "Device(E) ");
+//    printf("Expr *E=\t%d", E);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+  }
+
+  /// \brief Build an empty clause.
+  ///
+  OMPDeviceClause()
+      : clang::OMPClause(clang::OMPC_device, clang::SourceLocation(),
+			 clang::SourceLocation()),
+	LParenLoc(clang::SourceLocation()), Device(nullptr) {
+
+    printf("!!! >>>>>OMPDeviceClause() : OMPClause(OMPC_device, "
+	   "SourceLocation(), SourceLocation()), LParenLoc(SourceLocation()), "
+	   "Device(nullptr)\t");
+//    printf("this=\t%d", this);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+  }
+
+  /// \brief Sets the location of '('.
+  void setLParenLoc(clang::SourceLocation Loc) { LParenLoc = Loc; }
+  /// \brief Returns the location of '('.
+  clang::SourceLocation getLParenLoc() const { return LParenLoc; }
+  /// \brief Return device number.
+  clang::Expr *getDevice() {
+
+    printf("!!! >>>>>Stmt *Device >in getDevice of ODC");
+//    printf("%d", Device);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+
+    return clang::cast<clang::Expr>(Device);
+  }
+  /// \brief Return device number.
+  clang::Expr *getDevice() const {
+
+    printf("!!! >>>>>Expr *E >in getDevice const of ODC");
+//    printf("%d", Device);
+    printf("<<<<< !!!\n");
+    //       char str[2048];
+    //       scanf("%s", str);
+
+    return clang::cast<clang::Expr>(Device);
+  }
+
+  static bool classof(const clang::OMPClause *T) {
+    return T->getClauseKind() == clang::OMPC_device;
+  }
+
+  child_range children() { return child_range(&Device, &Device + 1); }
+};
+
+} // omph extension
+//}
 
 #endif // LLVM_CLANG_AST_OPENMPCLAUSE_H

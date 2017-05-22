@@ -152,6 +152,10 @@ unsigned clang::getOpenMPSimpleClauseType(OpenMPClauseKind Kind,
   case OMPC_capture:
   case OMPC_seq_cst:
   case OMPC_device:
+    return llvm::StringSwitch<::omph::OpenMPDeviceClauseKind>(Str)
+#define OPENMP_DEVICE_KIND(Name) .Case(#Name, omph::OMPC_DEVICE_##Name)
+#include "clang/Basic/OpenMPKinds.def"
+	.Default(::omph::OMPC_DEVICE_unknown);
   case OMPC_threads:
   case OMPC_simd:
   case OMPC_num_teams:
@@ -200,11 +204,11 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     case OMPC_SCHEDULE_MODIFIER_last:
       return "unknown";
 #define OPENMP_SCHEDULE_KIND(Name)                                             \
-    case OMPC_SCHEDULE_##Name:                                                 \
-      return #Name;
+  case OMPC_SCHEDULE_##Name:                                                   \
+    return #Name;
 #define OPENMP_SCHEDULE_MODIFIER(Name)                                         \
-    case OMPC_SCHEDULE_MODIFIER_##Name:                                        \
-      return #Name;
+  case OMPC_SCHEDULE_MODIFIER_##Name:                                          \
+    return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     }
     llvm_unreachable("Invalid OpenMP 'schedule' clause type");
@@ -212,8 +216,8 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     switch (Type) {
     case OMPC_DEPEND_unknown:
       return "unknown";
-#define OPENMP_DEPEND_KIND(Name)                                             \
-  case OMPC_DEPEND_##Name:                                                   \
+#define OPENMP_DEPEND_KIND(Name)                                               \
+  case OMPC_DEPEND_##Name:                                                     \
     return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     }
@@ -222,8 +226,8 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     switch (Type) {
     case OMPC_LINEAR_unknown:
       return "unknown";
-#define OPENMP_LINEAR_KIND(Name)                                             \
-  case OMPC_LINEAR_##Name:                                                   \
+#define OPENMP_LINEAR_KIND(Name)                                               \
+  case OMPC_LINEAR_##Name:                                                     \
     return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     }
@@ -232,8 +236,8 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     switch (Type) {
     case OMPC_MAP_unknown:
       return "unknown";
-#define OPENMP_MAP_KIND(Name)                                                \
-  case OMPC_MAP_##Name:                                                      \
+#define OPENMP_MAP_KIND(Name)                                                  \
+  case OMPC_MAP_##Name:                                                        \
     return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     default:
@@ -244,8 +248,8 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     switch (Type) {
     case OMPC_DIST_SCHEDULE_unknown:
       return "unknown";
-#define OPENMP_DIST_SCHEDULE_KIND(Name)                                      \
-  case OMPC_DIST_SCHEDULE_##Name:                                            \
+#define OPENMP_DIST_SCHEDULE_KIND(Name)                                        \
+  case OMPC_DIST_SCHEDULE_##Name:                                              \
     return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     }
@@ -255,12 +259,12 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
     case OMPC_DEFAULTMAP_unknown:
     case OMPC_DEFAULTMAP_MODIFIER_last:
       return "unknown";
-#define OPENMP_DEFAULTMAP_KIND(Name)                                         \
-    case OMPC_DEFAULTMAP_##Name:                                             \
-      return #Name;
-#define OPENMP_DEFAULTMAP_MODIFIER(Name)                                     \
-    case OMPC_DEFAULTMAP_MODIFIER_##Name:                                    \
-      return #Name;
+#define OPENMP_DEFAULTMAP_KIND(Name)                                           \
+  case OMPC_DEFAULTMAP_##Name:                                                 \
+    return #Name;
+#define OPENMP_DEFAULTMAP_MODIFIER(Name)                                       \
+  case OMPC_DEFAULTMAP_MODIFIER_##Name:                                        \
+    return #Name;
 #include "clang/Basic/OpenMPKinds.def"
     }
     llvm_unreachable("Invalid OpenMP 'schedule' clause type");
@@ -291,6 +295,15 @@ const char *clang::getOpenMPSimpleClauseTypeName(OpenMPClauseKind Kind,
   case OMPC_capture:
   case OMPC_seq_cst:
   case OMPC_device:
+    switch (Type) {
+    case ::omph::OMPC_DEVICE_unknown:
+      return "unknown";
+#define OPENMP_DEVICE_KIND(Name)                                               \
+  case omph::OMPC_DEVICE_##Name:                                               \
+    return #Name;
+#include "clang/Basic/OpenMPKinds.def"
+    }
+    llvm_unreachable("Invalid OpenMP 'device' clause type");
   case OMPC_threads:
   case OMPC_simd:
   case OMPC_num_teams:
@@ -699,7 +712,7 @@ bool clang::isOpenMPParallelDirective(OpenMPDirectiveKind DKind) {
 bool clang::isOpenMPTargetExecutionDirective(OpenMPDirectiveKind DKind) {
   // TODO add next directives.
   return DKind == OMPD_target || DKind == OMPD_target_parallel ||
-         DKind == OMPD_target_parallel_for || 
+	 DKind == OMPD_target_parallel_for ||
          DKind == OMPD_target_parallel_for_simd || DKind == OMPD_target_simd;
 }
 

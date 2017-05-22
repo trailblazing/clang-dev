@@ -1,4 +1,5 @@
-////===--- SemaOpenMP.cpp - Semantic Analysis for OpenMP constructs ---------===//
+////===--- SemaOpenMP.cpp - Semantic Analysis for OpenMP constructs
+///---------===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -7030,9 +7031,14 @@ StmtResult Sema::ActOnOpenMPTargetDirective(ArrayRef<OMPClause *> Clauses,
   }
 
   getCurFunction()->setHasBranchProtectedScope();
-  printf("!!! >>>>>StmtResult Sema::ActOnOpenMPTargetDirective(ArrayRef<OMPClause *> Clauses, Stmt *AStmt, SourceLocation StartLoc, SourceLocation EndLoc)");
-  printf("Stmt * AStmt = %d", AStmt);
+  printf("!!! >>>>>StmtResult "
+	 "Sema::ActOnOpenMPTargetDirective(ArrayRef<OMPClause *> Clauses, Stmt "
+	 "*AStmt, SourceLocation StartLoc, SourceLocation EndLoc)");
+  //  printf("Stmt * AStmt = %d", AStmt);
   printf("<<<<< !!!\n");
+  //  char str[2048];
+  //  scanf("%s", str);
+  printf("**********************error will begin!!!");
   return OMPTargetDirective::Create(Context, StartLoc, EndLoc, Clauses, AStmt);
 }
 
@@ -7621,11 +7627,10 @@ StmtResult Sema::ActOnOpenMPTeamsDistributeSimdDirective(
   OMPLoopDirective::HelperExprs B;
   // In presence of clause 'collapse' with number of loops, it will
   // define the nested loops number.
-  unsigned NestedLoopCount =
-      CheckOpenMPLoop(OMPD_teams_distribute_simd,
-                      getCollapseNumberExpr(Clauses),
-                      nullptr /*ordered not a clause on distribute*/, AStmt,
-                      *this, *DSAStack, VarsWithImplicitDSA, B);
+  unsigned NestedLoopCount = CheckOpenMPLoop(
+      OMPD_teams_distribute_simd, getCollapseNumberExpr(Clauses),
+      nullptr /*ordered not a clause on distribute*/, AStmt, *this, *DSAStack,
+      VarsWithImplicitDSA, B);
 
   if (NestedLoopCount == 0)
     return StmtError();
@@ -7677,7 +7682,7 @@ OMPClause *Sema::ActOnOpenMPSingleExprClause(OpenMPClauseKind Kind, Expr *Expr,
     Res = ActOnOpenMPOrderedClause(StartLoc, EndLoc, LParenLoc, Expr);
     break;
   case OMPC_device:
-    Res = ActOnOpenMPDeviceClause(Expr, StartLoc, LParenLoc, EndLoc);
+    Res = ActOnOpenMPDeviceExprClause(Expr, StartLoc, LParenLoc, EndLoc);
     break;
   case OMPC_num_teams:
     Res = ActOnOpenMPNumTeamsClause(Expr, StartLoc, LParenLoc, EndLoc);
@@ -7957,6 +7962,18 @@ OMPClause *Sema::ActOnOpenMPOrderedClause(SourceLocation StartLoc,
   DSAStack->setOrderedRegion(/*IsOrdered=*/true, NumForLoops);
   return new (Context)
       OMPOrderedClause(NumForLoops, StartLoc, LParenLoc, EndLoc);
+}
+
+// omph extension
+OMPClause *Sema::ActOnOpenMPDeviceExprClause(Expr *NumForLoops,
+					     SourceLocation StartLoc,
+					     SourceLocation LParenLoc,
+					     SourceLocation EndLoc) {
+
+  OMPClause *Res = nullptr;
+
+  // to do
+  return Res;
 }
 
 OMPClause *Sema::ActOnOpenMPSimpleClause(
@@ -8350,6 +8367,9 @@ OMPClause *Sema::ActOnOpenMPClause(OpenMPClauseKind Kind,
   case OMPC_flush:
   case OMPC_depend:
   case OMPC_device:
+  //    // omph extension
+  //    Res = ActOnOpenMPDeviceClause(StartLoc, EndLoc);
+  //    break;
   case OMPC_map:
   case OMPC_num_teams:
   case OMPC_thread_limit:
@@ -10646,7 +10666,7 @@ Sema::ActOnOpenMPDependClause(OpenMPDependClauseKind DepKind,
             DepCounter != DSAStack->isParentLoopControlVariable(D).first) {
           Diag(ELoc, diag::err_omp_depend_sink_expected_loop_iteration)
               << DSAStack->getParentLoopControlVariable(
-                     DepCounter.getZExtValue());
+		  DepCounter.getZExtValue());
           continue;
         }
         OpsOffs.push_back({RHS, OOK});
@@ -10701,14 +10721,24 @@ OMPClause *Sema::ActOnOpenMPDeviceClause(Expr *Device, SourceLocation StartLoc,
   if (!IsNonNegativeIntegerValue(ValExpr, *this, OMPC_device,
                                  /*StrictlyPositive=*/false))
     return nullptr;
-//        char str[2048];
-                                                                                                             
-        printf("!!! >>>>>OMPClause *Sema::ActOnOpenMPDeviceClause(Expr *Device, SourceLocation StartLoc, SourceLocation LParenLoc, SourceLocation EndLoc)");
-        printf("%d", static_cast<void*>(ValExpr));
-        printf("<<<<< !!!\n");                                                                               
-//        scanf("%s", str);
+  //	char str[2048];
 
-  return new (Context) OMPDeviceClause(ValExpr, StartLoc, LParenLoc, EndLoc);
+  printf("!!! >>>>>OMPClause *Sema::ActOnOpenMPDeviceClause(Expr *Device, "
+	 "SourceLocation StartLoc, SourceLocation LParenLoc, SourceLocation "
+	 "EndLoc)");
+  //  printf("%d", static_cast<void *>(ValExpr));
+  printf("<<<<< !!!\n");
+  assert(false); // throw std::exception();//std::runtime_error("It's too late
+		 // to capture the error!");
+		 //	scanf("%s", str);
+  //  auto valexpr_ = dynamic_cast<::omph::OMPDeviceExpr*>(ValExpr);
+  //  if (valexpr_)
+  return new (Context)::omph::OMPDeviceClause(
+      ValExpr, StartLoc, LParenLoc,
+      EndLoc); //(valexpr_, StartLoc, LParenLoc, EndLoc);
+  //  else
+  //    return new (Context) OMPDeviceClause(ValExpr, StartLoc, LParenLoc,
+  //    EndLoc);
 }
 
 static bool IsCXXRecordForMappable(Sema &SemaRef, SourceLocation Loc,

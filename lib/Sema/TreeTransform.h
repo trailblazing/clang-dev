@@ -8091,7 +8091,7 @@ TreeTransform<Derived>::TransformOMPDeviceClause(OMPDeviceClause *C) {
         printf("!!! >>>>>template <typename Derived>\
 OMPClause *\
 TreeTransform<Derived>::TransformOMPDeviceClause(OMPDeviceClause *C)");
-        printf("%d", C);
+//        printf("%d", C);
         printf("<<<<< !!!\n");
 //        scanf("%s", str);  
 
